@@ -3,7 +3,6 @@ language: python
 
 env:
   - PYTHON_VERSION=3.6
- # - PYTHON_VERSION=2.7 MAKE_DOC=TRUE
   
 before_install:
   - wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -32,3 +31,4 @@ after_success:
 
 notifications:
     slack: cpacketprojectteam:N9tlLqYoVOb3spbgv7ppDH6s
+    email: false
