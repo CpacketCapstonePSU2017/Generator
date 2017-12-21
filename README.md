@@ -2,6 +2,6 @@
 
 ## Cloning Instructions
 
-    * run git clone https://github.com/CpacketCapstonePSU2017/CPacket-Common-Modules
+    * run git clone https://github.com/CpacketCapstonePSU2017/Generator
     * run git submodule init
     * run git submodule update
