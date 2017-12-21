@@ -3,7 +3,8 @@ language: python
 
 env:
   - PYTHON_VERSION=3.6
- git:
+  
+git:
   submodules: false
  
 before_install:
