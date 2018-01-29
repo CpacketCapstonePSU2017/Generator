@@ -1,5 +1,8 @@
 import numpy as np
-
+import sys
+from os import path
+from root import ROOT_DIR
+sys.path.append(path.join(ROOT_DIR,'CPacket-Common-Modules'))
 
 class Poisson:
 
@@ -7,8 +10,8 @@ class Poisson:
         if maximum is None:
             raise ValueError("maximum cannot not be None")
         self._Size = size
-        self._Maximum = maximum
-        self._Minimum = minimum
+        self._Max = maximum
+        self._Min = minimum
         self._Shape = shape
 
         self.Dist_Array = None
@@ -49,5 +52,6 @@ class Generator:
             print(x)
 
 
-poisson_test = Poisson(1000, 1.25 * 10000000)
+poisson_test = Poisson(100, 1.25 * 10000000)
 generator_test = Generator(poisson_test)
+generator_test.show_array()
