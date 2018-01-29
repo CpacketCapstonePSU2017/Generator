@@ -2,7 +2,7 @@ import numpy as np
 import sys
 from os import path
 from root import ROOT_DIR
-sys.path.append(path.join(ROOT_DIR,'CPacket-Common-Modules'))
+sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 
 class Poisson:
 
