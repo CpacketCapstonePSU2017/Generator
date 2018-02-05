@@ -50,8 +50,3 @@ class Generator:
     def show_array(self):
         for x in self.Dist_Array:
             print(x)
-
-
-poisson_test = Poisson(100, 1.25 * 10000000)
-generator_test = Generator(poisson_test)
-generator_test.show_array()
