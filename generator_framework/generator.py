@@ -1,3 +1,8 @@
+'''
+    Author:
+'''
+
+from generator_config import *
 import numpy as np
 import sys
 from os import path
@@ -5,19 +10,18 @@ from root import ROOT_DIR
 sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 
 class Generator:
-    def __init__(self, days, functype, high_max, high_min, low_max, low_min):
-        self._Days = days
-        self._Function = functype
-        self._Increments = 96 * days
-        self._High_Max = high_max
-        self._High_Min = high_min
-        self._Low_Max = low_max
-        self._High_Min = low_min
-
-        remainder = days % 7
-        days_to_convert = days - remainder
-        self._Weeks = days_to_convert / 7
+    def __init__(self):
+        self._Config = GeneratorConfig()
+        self._Days = self._Config.Days
+        self._Function = self._Config.Func_Type
+        self._Increments = 96 * self._Days
+        self._High_Max = self._Config.High_Max
+        self._High_Min = self._Config.High_Min
+        self._Low_Max = self._Config.Low_Max
+        self._Low_Min = self._Config.Low_Min
         self.Dist_Array = None
+        self._Weeks = ((self._Days - (self._Days % 7)) / 7)
+
         for week in self._Weeks:
             array = []
             count = 0
@@ -33,7 +37,6 @@ class Generator:
                     #generate low traffic evening
                     array = np.concatenate([morning, worktime, evening])
                 self.Dist_Array = np.concat([self.Dist_Array, array])
-
 
 '''class Generator:
 
