@@ -6,11 +6,16 @@ from generator_config import *
 import numpy as np
 import sys
 from os import path
-from root import ROOT_DIR
-sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
+# FIX: Code does not run if these are uncommented
+#from root import ROOT_DIR
+#sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
+
 
 class Generator:
     def __init__(self):
+        '''
+
+        '''
         self._Config = GeneratorConfig()
         self._Days = self._Config.Days
         self._Function = self._Config.Func_Type
@@ -22,6 +27,8 @@ class Generator:
         self.Dist_Array = None
         self._Weeks = ((self._Days - (self._Days % 7)) / 7)
 
+        # FIX: commenting to test run() function, else there are errors
+        '''
         for week in self._Weeks:
             array = []
             count = 0
@@ -36,7 +43,29 @@ class Generator:
                     #generate low traffic work time
                     #generate low traffic evening
                     array = np.concatenate([morning, worktime, evening])
-                self.Dist_Array = np.concat([self.Dist_Array, array])
+                self.Dist_Array = np.concatenate([self.Dist_Array, array])
+        '''
+
+    def run(self):
+        '''
+            Runs generator. Not fully implemented. Right now just concatenates
+            three arrays together.
+        '''
+        if self._Function == "poisson":
+            # FIX: add code to loop correct amount of time based on self._Days
+            # FIX: use Stats class instead of directly calling function
+            morning = np.random.poisson(lam=10, size=self._Days)
+            # FIX: use Stats class instead of directly calling function
+            worktime = np.random.poisson(lam=100, size=self._Days)
+            # FIX: use Stats class instead of directly calling function
+            evening = np.random.poisson(lam=50, size=self._Days)
+            # Last step is merge arrays
+            array = np.concatenate((morning, worktime))
+            self.Dist_Array = np.concatenate((array, evening))
+        elif self._Function == "weilbul":
+            print("Functionality not implemented yet!")
+        elif self._Function == "beta":
+            print("Functionality not implemented yet!")
 
 '''class Generator:
 
@@ -60,3 +89,9 @@ class Generator:
     def show_array(self):
         for x in self.Dist_Array:
             print(x)'''
+
+# Test Code - Delete later
+test_generator = Generator()
+test_generator.run()
+
+print(test_generator.Dist_Array)
