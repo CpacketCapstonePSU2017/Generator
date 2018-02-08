@@ -4,6 +4,7 @@
 
 from generator_config import *
 import numpy as np
+import datetime
 import sys
 from os import path
 # FIX: Code does not run if these are uncommented
@@ -26,6 +27,7 @@ class Generator:
         self._Low_Min = self._Config.Low_Min
         self.Dist_Array = None
         self._Weeks = ((self._Days - (self._Days % 7)) / 7)
+        self.Start_Date = self._Config.Start_Date
 
         # FIX: commenting to test run() function, else there are errors
         '''
@@ -51,17 +53,39 @@ class Generator:
             Runs generator. Not fully implemented. Right now just concatenates
             three arrays together.
         '''
+        count = self.Start_Date.weekday()
         if self._Function == "poisson":
-            # FIX: add code to loop correct amount of time based on self._Days
-            # FIX: use Stats class instead of directly calling function
-            morning = np.random.poisson(lam=10, size=self._Days)
-            # FIX: use Stats class instead of directly calling function
-            worktime = np.random.poisson(lam=100, size=self._Days)
-            # FIX: use Stats class instead of directly calling function
-            evening = np.random.poisson(lam=50, size=self._Days)
-            # Last step is merge arrays
-            array = np.concatenate((morning, worktime))
-            self.Dist_Array = np.concatenate((array, evening))
+            #problem: integers and floats are not iterable, so we need to find an alternate way to iterate through the number of weeks
+            weeks = str(self._Weeks)
+            for week in weeks:
+                array = np.array([])
+                while count < 7:
+                    if count < 5:
+                        #weekday - high traffic
+                        # FIX: use Stats class instead of directly calling function
+                        morning = np.random.poisson(lam=10, size=self._Days)
+                        # FIX: use Stats class instead of directly calling function
+                        worktime = np.random.poisson(lam=100, size=self._Days)
+                        # FIX: use Stats class instead of directly calling function
+                        evening = np.random.poisson(lam=50, size=self._Days)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning, worktime, evening])
+                    else:
+                        #weekend - low traffic
+                        morning = np.random.poisson(lam=5, size=self._Days)
+                        # FIX: use Stats class instead of directly calling function
+                        worktime = np.random.poisson(lam=50, size=self._Days)
+                        # FIX: use Stats class instead of directly calling function
+                        evening = np.random.poisson(lam=25, size=self._Days)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning, worktime, evening])
+                    if self.Dist_Array is None:
+                        self.Dist_Array = array
+                    else:
+                        self.Dist_Array = np.concatenate([self.Dist_Array, array])
+                        count += 1
+                count = 0
+
         elif self._Function == "weilbul":
             print("Functionality not implemented yet!")
         elif self._Function == "beta":
