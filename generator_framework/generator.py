@@ -18,6 +18,7 @@ class Generator:
 
         '''
         self._Config = GeneratorConfig()
+        # TODO: This can be converted to only self._Config.**** No need to make copies
         self._Days = self._Config.Days
         self._Function = self._Config.Func_Type
         self._Increments = 96 * self._Days

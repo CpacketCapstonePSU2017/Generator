@@ -18,7 +18,7 @@ class Stats:
             :param: Type: The distribution function to use. For now 'None' will default to Poisson.
         """
 
-        # Redundant
+        # copied for Generate function.
         self._Min = minimum
         self._Max = maximum
         self._Size = size
@@ -28,20 +28,47 @@ class Stats:
         self.Dist_Array = None
 
         # Default function type will be Poisson.
-        if self._Func_Type is None:
+        if self._Func_Type is None or self._Func_Type == 'poisson':
             if self._Max is None:
-                # TODO: Could be moved to non-hardcoded value.
+                # default to hardcoded max
                 self._Max = 1.25 * 10000000
-                lamda = self._Max - (self._Max / 4)
+            # TODO: Fiddle with this level of variance
+            lam = self._Max - (self._Max / 4)
+            # TODO: error check Max and Size
+            self.Dist_Array = np.random.poisson(lam=lam, size=self._Size)
+            for x in self.Dist_Array:
+                if x > self._Max:
+                    # print x
+                    x = self._Max
+        elif self._Func_Type == 'weibul':
+            # weibul function implementation
+            pass
+        elif self._Func_Type == 'Beta':
+            # beta function implementation
+            pass
+        else:
+            print("Function type not recognized!")
 
-                # TODO: error check Max and Size
-                self.Dist_Array = np.random.poisson(lam=lamda, size=self._Size)
-                for x in self.Dist_Array:
-                    if x > self._Max:
-                        # print x
-                        x = self._Max
-
-    # Used for getting a second byte count later in development
-    def newByteCount(self):
-        # Dummy for testing to have index changed properly
-        return self._DistArray[np.random.randint(0, self.Size)]
+    # Used for getting a second Dist array later in development.
+    # overwrites the current Dist_Array.
+    def generate(self):
+        # switch for function type
+        # Default
+        if self._Func_Type is None or self._Func_Type == 'poisson':
+            if self._Max is None:
+                # default hardcoded value
+                self._Max = 1.25 * 10000000
+            # TODO: Fiddle with this level of variance
+            lam = self._Max - (self._Max / 4)
+            # TODO: error check Max and Size
+            self.Dist_Array = np.random.poisson(lam=lam, size=self._Size)
+            for x in self.Dist_Array:
+                if x > self._Max:
+                    # print x
+                    x = self._Max
+        elif self._Func_Type == 'weibul':
+            pass
+        elif self._Func_Type == 'beta':
+            pass
+        else:
+            print("Function type not recognized!")
