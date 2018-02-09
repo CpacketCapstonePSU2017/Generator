@@ -72,3 +72,6 @@ class Stats:
             pass
         else:
             print("Function type not recognized!")
+            return -1
+
+        return self.Dist_Array
