@@ -40,10 +40,10 @@ class Stats:
                 if x > self._Max:
                     # print x
                     x = self._Max
-        elif self._Func_Type == 'weibul':
+        elif self._Func_Type == 'weilbull':
             # weibul function implementation
             self.Dist_Array = np.random.weibull(self._Shape, self._Size)
-        elif self._Func_Type == 'Beta':
+        elif self._Func_Type == 'beta':
             # beta function implementation
             pass
         else:
