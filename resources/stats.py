@@ -42,7 +42,7 @@ class Stats:
                     x = self._Max
         elif self._Func_Type == 'weibul':
             # weibul function implementation
-            pass
+            self.Dist_Array = np.random.weibull(self._Shape, self._Size)
         elif self._Func_Type == 'Beta':
             # beta function implementation
             pass
