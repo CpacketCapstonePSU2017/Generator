@@ -21,6 +21,7 @@ class Generator:
         # TODO: This can be converted to only self._Config.**** No need to make copies
         self._Days = self._Config.Days
         self._Function = self._Config.Func_Type
+        self._Shape = self._Config.Shape
         self._Increments = 96 * self._Days
         self._High_Max = self._Config.High_Max
         self._High_Min = self._Config.High_Min
@@ -118,5 +119,4 @@ class Generator:
 # Test Code - Delete later
 test_generator = Generator()
 test_generator.run()
-
 print(test_generator.Dist_Array)
