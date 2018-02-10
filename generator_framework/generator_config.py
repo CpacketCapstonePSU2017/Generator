@@ -18,7 +18,7 @@ class GeneratorConfig:
         self.Low_Min = 0
         self.Business_Hours = 6
         self.Func_Type = "poisson"
-        self.Shape = 0
+        self.Shape = 1
         self.Start_Date = datetime.date.today()
 
     def set_config(self, days=None, high_day_max=None, high_day_min=None, low_day_max=None, low_day_min=None,
@@ -39,7 +39,7 @@ class GeneratorConfig:
 
 
 #Test Code
-test_generator_config = GeneratorConfig()
-test_generator_config.get_config()
-test_generator_config.set_config(14, 200, 0, 100, 0, 12, "weibull", 1)
-test_generator_config.get_config()
+#test_generator_config = GeneratorConfig()
+#test_generator_config.get_config()
+#test_generator_config.set_config(14, 200, 0, 100, 0, 12, "weibull", 1)
+#test_generator_config.get_config()
