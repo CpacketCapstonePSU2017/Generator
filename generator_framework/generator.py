@@ -6,10 +6,12 @@ from generator_config import *
 import numpy as np
 import datetime
 import sys
-from os import path
+import os
 # FIX: Code does not run if these are uncommented
 #from root import ROOT_DIR
 #sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
+sys.path.append(os.path.abspath('../resources'))
+from stats import *
 
 
 class Generator:
@@ -56,14 +58,15 @@ class Generator:
             three arrays together.
         '''
         count = self.Start_Date.weekday()
-        if self._Function == "poisson":
-            #problem: integers and floats are not iterable, so we need to find an alternate way to iterate through the number of weeks
-            weeks = str(self._Weeks)
-            for week in weeks:
-                array = np.array([])
-                while count < 7:
-                    if count < 5:
-                        #weekday - high traffic
+        #problem: integers and floats are not iterable, so we need to find an alternate way to iterate through the number of weeks
+        weeks = str(self._Weeks)
+        for week in weeks:
+            array = np.array([])
+            while count < 7:
+                if count < 5:
+                    #weekday - high traffic
+                    if self._Function == "poisson":
+                        '''
                         # FIX: use Stats class instead of directly calling function
                         morning = np.random.poisson(lam=10, size=self._Days)
                         # FIX: use Stats class instead of directly calling function
@@ -72,8 +75,26 @@ class Generator:
                         evening = np.random.poisson(lam=50, size=self._Days)
                         # Last step is merge arrays
                         array = np.concatenate([morning, worktime, evening])
+                        '''
+                        morning = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        worktime = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        evening = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning.Dist_Array, worktime.Dist_Array, evening.Dist_Array])
+                    elif self._Function == "weilbull":
+                        morning = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        worktime = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        evening = Stats(self._Days, self._High_Max, self._High_Min, self._Shape, self._Function)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning.Dist_Array, worktime.Dist_Array, evening.Dist_Array])
+                    elif self._Function == "beta":
+                        pass
                     else:
-                        #weekend - low traffic
+                        pass
+                else:
+                    #weekend - low traffic
+                    if self._Function == "poisson":
+                        '''
                         morning = np.random.poisson(lam=5, size=self._Days)
                         # FIX: use Stats class instead of directly calling function
                         worktime = np.random.poisson(lam=50, size=self._Days)
@@ -81,17 +102,28 @@ class Generator:
                         evening = np.random.poisson(lam=25, size=self._Days)
                         # Last step is merge arrays
                         array = np.concatenate([morning, worktime, evening])
-                    if self.Dist_Array is None:
-                        self.Dist_Array = array
+                        '''
+                        morning = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        worktime = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        evening = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning.Dist_Array, worktime.Dist_Array, evening.Dist_Array])
+                    elif self._Function == "weilbull":
+                        morning = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        worktime = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        evening = Stats(self._Days, self._Low_Max, self._Low_Min, self._Shape, self._Function)
+                        # Last step is merge arrays
+                        array = np.concatenate([morning.Dist_Array, worktime.Dist_Array, evening.Dist_Array])
+                    elif self._Function == "beta":
+                        pass
                     else:
-                        self.Dist_Array = np.concatenate([self.Dist_Array, array])
-                        count += 1
-                count = 0
-
-        elif self._Function == "weilbul":
-            print("Functionality not implemented yet!")
-        elif self._Function == "beta":
-            print("Functionality not implemented yet!")
+                        pass
+                if self.Dist_Array is None:
+                    self.Dist_Array = array
+                else:
+                    self.Dist_Array = np.concatenate([self.Dist_Array, array])
+                    count += 1
+            count = 0
 
 '''class Generator:
 
@@ -118,5 +150,7 @@ class Generator:
 
 # Test Code - Delete later
 test_generator = Generator()
+test_generator._Config.get_config()
 test_generator.run()
 print(test_generator.Dist_Array)
+print("array count: %d" % (len(test_generator.Dist_Array)))
