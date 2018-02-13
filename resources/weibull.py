@@ -3,9 +3,60 @@
     The byte count is accessed from ._ByteCount for each new object created.
 """
 
+from generator_framework.generator_config import *
 import numpy as np
+import pandas as pd
+from root import ROOT_DIR
+import sys
+from os import path
+sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 
 
+class Weibull:
+    def __init__(self):
+        self._Config = GeneratorConfig()
+        self.work_hours = self._Config.Business_Hours * 4
+        self.morning_hours = self._Config.Work_Hour_Start * 4
+        self.evening_hours = 96 - self.morning_hours - self.work_hours
+        self.Dist_Array = None
+        self._Weeks = ((self._Config.Days - (self._Config.Days % 7)) / 7)
+        self._Increments = 96 * self._Config.Days
+        self.Function_Name = "weibull"
+
+    def get_array(self, max, increments):
+        array = (self._Config.Scale * np.random.weibull(self._Config.Shape, increments)).astype(int)
+        array[array > max] = max
+        return array
+
+    def generate(self):
+        count = self._Config.Start_Date.weekday()
+        iter = 0
+        iterArray = []
+        while iter < self._Weeks:
+            iterArray.append(iter)
+            iter += 1
+        for week in iterArray:
+            array = np.array([])
+            while count < 7:
+                if count < 5:
+                    #weekday - high traffic during work hours
+                    array = np.concatenate([self.get_array(self._Config.Low_Max, self.morning_hours), self.get_array(self._Config.High_Max, self.work_hours), self.get_array(self._Config.Low_Max, self.evening_hours)])
+                else:
+                    #weekend - low traffic
+                    array = self.get_array(self._Config.Low_Max, self._Increments)
+                if self.Dist_Array is None:
+                    self.Dist_Array = array
+                else:
+                    self.Dist_Array = np.concatenate([self.Dist_Array, array])
+                count += 1
+            count = 0
+        result_datetimes = np.array(
+            pd.date_range(self._Config.Start_Date, periods=self._Increments + 1, freq='15min'))[1:]
+        print("Hey!")
+        return np.array([result_datetimes, self.Dist_Array]).transpose()
+
+
+'''
 class Stats:
 
     def __init__(self, size, maximum=None, minimum=0, shape=None, functype=None):
@@ -87,3 +138,4 @@ class Stats:
             return -1
 
         return self.Dist_Array
+'''
