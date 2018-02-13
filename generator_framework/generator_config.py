@@ -12,13 +12,13 @@ class GeneratorConfig:
 
         '''
         self.Days = 7
-        self.High_Max = 100
+        self.High_Max = 1.25 * 10000000
         self.High_Min = 0
-        self.Low_Max = 50
+        self.Low_Max = 1.25 * 1000000
         self.Low_Min = 0
         self.Business_Hours = 6
-        self.Func_Type = "poisson"
-        self.Shape = 1
+        self.Func_Type = "weibull"
+        self.Shape = .5
         self.Start_Date = datetime.date.today()
 
     def set_config(self, days=None, high_day_max=None, high_day_min=None, low_day_max=None, low_day_min=None,

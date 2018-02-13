@@ -34,15 +34,21 @@ class Stats:
                 self._Max = 1.25 * 10000000
             # TODO: Fiddle with this level of variance
             lam = self._Max - (self._Max / 4)
-            # TODO: error check Max and Size
             self.Dist_Array = np.random.poisson(lam=lam, size=self._Size)
             for x in self.Dist_Array:
                 if x > self._Max:
-                    # print x
-                    x = self._Max
-        elif self._Func_Type == 'weilbull':
-            # weibul function implementation
-            self.Dist_Array = np.random.weibull(self._Shape, self._Size)
+                    x *= 0
+                    x += self._Max
+        elif self._Func_Type == 'weibull':
+            if self._Max is None:
+                self._Max = 1.25 * 10000000
+            self.Dist_Array = (1000000 * np.random.weibull(self._Shape, self._Size)).astype(int)
+            self.Dist_Array[self.Dist_Array > self._Max] = self._Max
+            for x in self.Dist_Array:
+                if x > self._Max:
+                    print("x is greater than max")
+                    x *= 0
+                    x += self._Max
         elif self._Func_Type == 'beta':
             # beta function implementation
             pass
@@ -64,10 +70,16 @@ class Stats:
             self.Dist_Array = np.random.poisson(lam=lam, size=self._Size)
             for x in self.Dist_Array:
                 if x > self._Max:
-                    # print x
-                    x = self._Max
-        elif self._Func_Type == 'weibul':
-            pass
+                    x *= 0
+                    x += self._Max
+        elif self._Func_Type == 'weibull':
+            if self._Max is None:
+                self._Max = 1.25 * 10000000
+            self.Dist_Array = (10000000 * np.random.weibull(self._Shape, self._Size)).astype(int)
+            for x in self.Dist_Array:
+                if x > self._Max:
+                    x *= 0
+                    x += self._Max
         elif self._Func_Type == 'beta':
             pass
         else:
