@@ -50,6 +50,7 @@ class Generator:
 
 # Test Code - Delete later
 test_generator = Generator()
-test_generator.write_data_to_csv()
 test_generator.write_data_to_database()
+test_generator.write_data_to_csv()
+
 

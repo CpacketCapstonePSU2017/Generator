@@ -18,7 +18,7 @@ class Poisson:
         self.Name = "poisson"
 
     def get_array(self, max, increments):
-        lam = max - (max / 4)
+        lam = max - (max / 3)
         array = np.random.poisson(lam=lam, size=increments)
         array[array > max] = max
         return array
@@ -45,7 +45,7 @@ class Poisson:
                     self.Dist_Array = np.concatenate([self.Dist_Array, array])
                 count += 1
             count = 0
+        start_date = str(self._Config.Start_Date) + "T00:00:00.00"
         result_datetimes = np.array(
-            pd.date_range(self._Config.Start_Date, periods=self._Increments + 1, freq='15min'))[1:]
-        print(self.Dist_Array)
+            pd.date_range(start_date, periods=self._Increments + 1, freq='15min'))[1:]
         return np.array([result_datetimes, self.Dist_Array]).transpose()

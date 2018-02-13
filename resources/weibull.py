@@ -51,7 +51,8 @@ class Weibull:
                     self.Dist_Array = np.concatenate([self.Dist_Array, array])
                 count += 1
             count = 0
+        start_date = str(self._Config.Start_Date) + "T00:00:00.00"
         result_datetimes = np.array(
-            pd.date_range(self._Config.Start_Date, periods=self._Increments + 1, freq='15min'))[1:]
+            pd.date_range(start_date, periods=self._Increments + 1, freq='15min'))[1:]
         return np.array([result_datetimes, self.Dist_Array]).transpose()
 
