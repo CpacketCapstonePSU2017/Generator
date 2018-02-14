@@ -1,3 +1,4 @@
+from root import ROOT_DIR
 from generator_framework import generator
 from generator_framework import generator_config
 import random
