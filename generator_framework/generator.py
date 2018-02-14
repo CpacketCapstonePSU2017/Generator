@@ -17,6 +17,7 @@ from resources.weibull import *
 from os import path, remove
 from resources.config import RESOURCES_DIR
 from resources import db_config
+from root import ROOT_DIR
 sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 from io_framework.csv_writer import CsvWriter
 
