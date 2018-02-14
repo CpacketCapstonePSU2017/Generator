@@ -10,7 +10,7 @@
     write_data_to_database takes the generated data and puts it in a csv, and then transfers it to InfluxDB.
 '''
 
-from generator_config import *
+from generator_framework.generator_config import GeneratorConfig
 import sys
 sys.path.append('../resources')
 from resources.weibull import *

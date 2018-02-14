@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+
 class Poisson:
     def __init__(self, generator_config):
         self._Config = generator_config
@@ -11,12 +12,13 @@ class Poisson:
         self.Increments_Per_Day = 96
         self._Increments = 96 * self._Config.Days
         self._Weeks = ((self._Config.Days - (self._Config.Days % 7)) / 7)
+        # print("Weeks: ", self._Weeks, "Days: ", self._Config.Days)
         self.Name = "poisson"
 
-    def get_array(self, max, increments):
-        lam = max - (max / 3)
+    def get_array(self, maximum, increments):
+        lam = maximum - (maximum / 3)
         array = np.random.poisson(lam=lam, size=increments)
-        array[array > max] = max
+        array[array > maximum] = maximum
         return array
 
     def generate(self):
@@ -30,10 +32,12 @@ class Poisson:
             array = np.array([])
             while count < 7:
                 if count < 5:
-                    #weekday - high traffic during work hours
-                    array = np.concatenate([self.get_array(self._Config.Low_Max, self.morning_hours), self.get_array(self._Config.High_Max, self.work_hours), self.get_array(self._Config.Low_Max, self.evening_hours)])
+                    # weekday - high traffic during work hours
+                    array = np.concatenate([self.get_array(self._Config.Low_Max, self.morning_hours),
+                                            self.get_array(self._Config.High_Max, self.work_hours),
+                                            self.get_array(self._Config.Low_Max, self.evening_hours)])
                 else:
-                    #weekend - low traffic
+                    # weekend - low traffic
                     array = self.get_array(self._Config.Low_Max, self.Increments_Per_Day)
                 if self.Dist_Array is None:
                     self.Dist_Array = array
