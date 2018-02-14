@@ -36,7 +36,7 @@ class Generator:
         df = self.nparray_to_dataframe()
         model_name = self._Config.Func_Type.Name
         if not isinstance(df, pd.DataFrame):
-            print("Error reading the data from database. Please test this query in Chronograf/Grafana.")
+            print("Error reading the data from database.")
         df.to_csv(path.join(RESOURCES_DIR, model_name + "_generated.csv"))
 
     def write_data_to_database(self):
@@ -46,11 +46,4 @@ class Generator:
         self._data_writer.csv_file_to_db(measurement_to_use=model_name + '_generated',
                                          new_csv_file_name=path.join(RESOURCES_DIR, model_name + "_generated.csv"))
         remove(path.join(RESOURCES_DIR, model_name + "_generated.csv"))
-
-
-# Test Code - Delete later
-test_generator = Generator()
-test_generator.write_data_to_database()
-test_generator.write_data_to_csv()
-
 

@@ -5,10 +5,6 @@
 
 import pandas as pd
 import numpy as np
-from root import ROOT_DIR
-import sys
-from os import path
-sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 
 
 class Weibull:

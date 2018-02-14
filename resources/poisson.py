@@ -1,9 +1,5 @@
 import pandas as pd
 import numpy as np
-from root import ROOT_DIR
-import sys
-from os import path
-sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 
 class Poisson:
     def __init__(self, generator_config):
