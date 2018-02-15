@@ -28,7 +28,7 @@ class GeneratorConfig:
 
     def set_config(self, database=None, days=None, high_max=None, high_min=None, low_max=None, low_min=None,
                    business_hours=None, shape=None, start_date=None, work_hour_start=None, scale=None,
-                   funct_type=None):
+                   func_type=None):
         self.Database = database
         self.Days = days
         self.High_Max = high_max
@@ -40,7 +40,12 @@ class GeneratorConfig:
         self.Start_Date = start_date
         self.Work_Hour_Start = work_hour_start
         self.Scale = scale
-        self.Func_Type = funct_type
+        if func_type == 'poisson':
+            self.Func_Type = Poisson(self)
+        elif func_type == 'weibull':
+            self.Func_Type = Weibull(self)
+        else:
+            self.Func_Type = None
 
     def get_config(self):
         config_data = [self.Database, self.Days, self.High_Max, self.High_Min, self.Low_Max, self.Low_Min,
