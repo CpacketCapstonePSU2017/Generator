@@ -17,7 +17,16 @@ class TestGenerator(TestCase):
     # Test that config class prints out properly (will always pass)
     # TODO implement some way to check that the printed values are correct
     def test_GetConfig(self):
-        self.config.get_config()
+        # build a list with class variable manually
+        manual_config_list = [self.config.Database, self.config.Days, self.config.High_Max, self.config.High_Min,
+                              self.config.Low_Max, self.config.Low_Min, self.config.Business_Hours, self.config.Shape,
+                              self.config.Start_Date, self.config.Work_Hour_Start, self.config.Scale,
+                              self.config.Func_Type.Name]
+        # build a list using the get_config()
+        get_config_list = self.config.get_config()
+        # compare the list and return result
+        result = cmp(manual_config_list, get_config_list)
+        self.assertEqual(result, 0, "Compared lists are not equal ")
 
     # Check that set config works properly
     # TODO Function type cannot be specified properly in a way the code will execute
