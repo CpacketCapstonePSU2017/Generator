@@ -1,6 +1,7 @@
 from generator_framework import generator
 from generator_framework import generator_config
 import random
+import datetime
 from unittest import TestCase
 
 
@@ -32,8 +33,14 @@ class TestGenerator(TestCase):
     # TODO Function type cannot be specified properly in a way the code will execute
         # Set config should be able to properly recognize a string of the function name and use the according class
     def test_SetConfig(self):
-        self.config.set_config(14, 200, 0, 100, 0, 12, "weibull", 1)
-        self.config.get_config()
+        data = ['weibull_data', 7, 100, 0, 50, 0, 8, 1, datetime.date.today(), 8, 1, 'weibull']
+        self.config.set_config(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
+                               data[8], data[9], data[10], data[11])
+        get_data = self.config.get_config()
+        #print(data)
+        #print(get_data)
+        result = cmp(data, get_data)
+        self.assertEqual(result, 0, "Compared lists are not equal")
 
     def test_arraySize(self):
         # Get expected array size
