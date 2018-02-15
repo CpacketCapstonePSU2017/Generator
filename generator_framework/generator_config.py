@@ -6,6 +6,7 @@ import datetime
 from resources.weibull import *
 from resources.poisson import *
 
+
 class GeneratorConfig:
 
     def __init__(self):
@@ -25,22 +26,27 @@ class GeneratorConfig:
         self.Scale = 1000000
         self.Func_Type = Poisson(self)
 
-    def set_config(self, days=None, high_day_max=None, high_day_min=None, low_day_max=None, low_day_min=None,
-                   business_hours=None, funct_type=None, shape=None, start_date=None):
+    def set_config(self, database=None, days=None, high_max=None, high_min=None, low_max=None, low_min=None,
+                   business_hours=None, shape=None, start_date=None, work_hour_start=None, scale=None,
+                   funct_type=None):
+        self.Database = database
         self.Days = days
-        self.High_Max = high_day_max
-        self.High_Min = high_day_min
-        self.Low_Max = low_day_max
-        self.Low_Min = low_day_min
+        self.High_Max = high_max
+        self.High_Min = high_min
+        self.Low_Max = low_max
+        self.Low_Min = low_min
         self.Business_Hours = business_hours
-        self.Func_Type = funct_type
         self.Shape = shape
         self.Start_Date = start_date
+        self.Work_Hour_Start = work_hour_start
+        self.Scale = scale
+        self.Func_Type = funct_type
 
     def get_config(self):
-        print("configuration: %d %d %d %d %d %d %s %d %s" % (self.Days, self.High_Max, self.High_Min,
-              self.Low_Max, self.Low_Min, self.Business_Hours, self.Func_Type, self.Shape, self.Start_Date))
-
+        config_data = [self.Database, self.Days, self.High_Max, self.High_Min, self.Low_Max, self.Low_Min,
+                       self.Business_Hours, self.Shape, self.Start_Date, self.Work_Hour_Start, self.Scale,
+                       self.Func_Type.Name]
+        return config_data
 
 #Test Code
 #test_generator_config = GeneratorConfig()
