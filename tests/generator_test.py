@@ -26,7 +26,14 @@ class TestGenerator(TestCase):
         # build a list using the get_config()
         get_config_list = self.config.get_config()
         # compare the list and return result
-        result = cmp(manual_config_list, get_config_list)
+        count = 0
+        result = 0
+        for i in manual_config_list:
+            if i != get_config_list[count]:
+                result = -1
+                break
+            else:
+                count += 1
         self.assertEqual(result, 0, "Compared lists are not equal ")
 
     # Check that set config works properly
@@ -37,9 +44,14 @@ class TestGenerator(TestCase):
         self.config.set_config(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
                                data[8], data[9], data[10], data[11])
         get_data = self.config.get_config()
-        #print(data)
-        #print(get_data)
-        result = cmp(data, get_data)
+        count = 0
+        result = 0
+        for i in data:
+            if i != get_data[count]:
+                result = -1
+                break
+            else:
+                count += 1
         self.assertEqual(result, 0, "Compared lists are not equal")
 
     def test_arraySize(self):
