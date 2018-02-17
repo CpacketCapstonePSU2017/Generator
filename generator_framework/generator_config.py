@@ -52,9 +52,3 @@ class GeneratorConfig:
                        self.Business_Hours, self.Shape, self.Start_Date, self.Work_Hour_Start, self.Scale,
                        self.Func_Type.Name]
         return config_data
-
-#Test Code
-#test_generator_config = GeneratorConfig()
-#test_generator_config.get_config()
-#test_generator_config.set_config(14, 200, 0, 100, 0, 12, "weibull", 1)
-#test_generator_config.get_config()
