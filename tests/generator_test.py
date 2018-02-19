@@ -16,7 +16,6 @@ class TestGenerator(TestCase):
         self.config = None
 
     # Test that config class prints out properly (will always pass)
-    # TODO implement some way to check that the printed values are correct
     def test_GetConfig(self):
         # build a list with class variable manually
         manual_config_list = [self.config.Database, self.config.Days, self.config.High_Max, self.config.High_Min,
@@ -37,8 +36,6 @@ class TestGenerator(TestCase):
         self.assertEqual(result, 0, "Compared lists are not equal ")
 
     # Check that set config works properly
-    # TODO Function type cannot be specified properly in a way the code will execute
-        # Set config should be able to properly recognize a string of the function name and use the according class
     def test_SetConfig(self):
         data = ['weibull_data', 7, 100, 0, 50, 0, 8, 1, datetime.date.today(), 8, 1, 'weibull']
         self.config.set_config(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
@@ -60,17 +57,16 @@ class TestGenerator(TestCase):
         # print("Expected array size: ", size)
         self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Array Size")
 
-    # TODO Create a way for values in the config to be changed and used on the fly
     # Check that the array has correct size with custom inputted days
     def test_customArraySize(self):
-        self.fail("Can't enter custom days yet")
         # Set random number of days to be tested.
         self.config.Days = random.randint(7, 25)
         # Get expected array size
         size = self.config.Days * 24 * (60 / 15)
-        print("Expected array size: ", size)
-        self.gen = generator.Generator()
-        print(len(self.gen.Dist_Array[1]))
+        # print("Expected array size: ", size)
+        self.gen = generator.Generator(self.config)
+        # print(self.gen.Dist_Array)
+        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Custom Array Size")
 
     # Check that the generated data has cliffs (high days and low days)
     def test_arrayCliffs(self):
