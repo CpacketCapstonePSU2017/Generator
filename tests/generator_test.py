@@ -55,18 +55,26 @@ class TestGenerator(TestCase):
         # Get expected array size
         size = self.config.Days * 24 * (60 / 15)
         # print("Expected array size: ", size)
-        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Array Size")
+        timestamps = self.gen.Dist_Array[0]
+        data = self.gen.Dist_Array[1]
+        self.assertEquals(timestamps.size, data.size, "Timestamp and Data arrays have different sizes")
+        self.assertEquals(self.gen.Dist_Array[0].size, size, "Incorrect Timestamp Array Size")
+        self.assertEquals(self.gen.Dist_Array[1].size, size, "Incorrect Data Array Size")
 
     # Check that the array has correct size with custom inputted days
     def test_customArraySize(self):
         # Set random number of days to be tested.
-        self.config.Days = random.randint(7, 25)
+        self.config.set_config(days=random.randint(7, 25))
         # Get expected array size
         size = self.config.Days * 24 * (60 / 15)
         # print("Expected array size: ", size)
         self.gen = generator.Generator(self.config)
         # print(self.gen.Dist_Array)
-        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Custom Array Size")
+        timestamps = self.gen.Dist_Array[0]
+        data = self.gen.Dist_Array[1]
+        self.assertEquals(timestamps.size, data.size, "Timestamp and Data arrays have different sizes")
+        self.assertEquals(self.gen.Dist_Array[0].size, size, "Incorrect Timestamp Array Size")
+        self.assertEquals(self.gen.Dist_Array[1].size, size, "Incorrect Data Array Size")
 
     # Check that the generated data has cliffs (high days and low days)
     def test_arrayCliffs(self):

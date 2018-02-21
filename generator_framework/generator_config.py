@@ -26,9 +26,9 @@ class GeneratorConfig:
         self.Scale = 1000000
         self.Func_Type = Poisson(self)
 
-    def set_config(self, database=None, days=None, high_max=None, high_min=None, low_max=None, low_min=None,
-                   business_hours=None, shape=None, start_date=None, work_hour_start=None, scale=None,
-                   func_type=None):
+    def set_config(self, database='poisson_data', days=7, high_max=1.25 * 10000000, high_min=0, low_max=1.25 * 1500000, low_min=0,
+                   business_hours=6, shape=.5, start_date=datetime.date.today(), work_hour_start=8, scale=1000000,
+                   func_type='poisson'):
         self.Database = database
         self.Days = days
         self.High_Max = high_max
