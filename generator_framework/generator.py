@@ -58,26 +58,3 @@ class Generator:
         self._data_writer.csv_file_to_db(measurement_to_use=model_name + '_generated',
                                          new_csv_file_name=path.join(RESOURCES_DIR, model_name + "_generated.csv"))
         remove(path.join(RESOURCES_DIR, model_name + "_generated.csv"))
-
-
-# FIX: Remove this code if __init__ is okay after changes
-# Test Code
-#data = ['weibull_data', 7, 100, 0, 50, 0, 8, 1, datetime.date.today(), 8, 1, 'weibull']
-#data2 = ['poisson_data', 7, 100, 0, 50, 0, 8, 1, datetime.date.today(), 8, 1, 'poisson']
-
-# Create default Generator
-#test_generator_1 = Generator()
-#print(test_generator_1._Config.get_config())
-
-# Create default Generator, then update Config
-#test_generator_2 = Generator()
-#print(test_generator_2._Config.get_config())
-#new_config = GeneratorConfig()
-#new_config.set_config(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9],
-#                      data[10], data[11])
-#test_generator_2 = Generator(new_config)
-#print(test_generator_2._Config.get_config())
-#new_config.set_config(data2[0], data2[1], data2[2], data2[3], data2[4], data2[5], data2[6], data2[7], data2[8], data2[9],
-#                      data2[10], data2[11])
-#test_generator_2 = Generator(new_config)
-#print(test_generator_2._Config.get_config())
