@@ -55,11 +55,17 @@ class TestGenerator(TestCase):
         # Get expected array size
         size = self.config.Days * 24 * (60 / 15)
         # print("Expected array size: ", size)
-        timestamps = self.gen.Dist_Array[0]
-        data = self.gen.Dist_Array[1]
-        self.assertEquals(len(timestamps), len(data), "Timestamp and Data arrays have different sizes")
-        self.assertEquals(len(self.gen.Dist_Array[0]), size, "Incorrect Timestamp Array Size")
-        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Data Array Size")
+        rows = self.gen.Dist_Array.shape[0]
+        columns = None
+        try:
+            columns = self.gen.Dist_Array.shape[1]
+        # If timestamp and data arrays have different sizes, then the numpy array won't be created properly
+        # Dist_Array.shape will be (2,)
+        # and therefore Dist_Array.shape[1] will throw an IndexError Exception
+        except IndexError:
+            print("Timestamp and data arrays have different sizes.")
+        self.assertEquals(rows, size, "Incorrect timestamp and data array size")
+        self.assertEquals(columns, 2, "Incorrect number of dimensions (should be 2)")
 
     # Check that the array has correct size with custom inputted days
     def test_customArraySize(self):
@@ -70,11 +76,17 @@ class TestGenerator(TestCase):
         # print("Expected array size: ", size)
         self.gen = generator.Generator(self.config)
         # print(self.gen.Dist_Array)
-        timestamps = self.gen.Dist_Array[0]
-        data = self.gen.Dist_Array[1]
-        self.assertEquals(len(timestamps), len(data), "Timestamp and Data arrays have different sizes")
-        self.assertEquals(len(self.gen.Dist_Array[0]), size, "Incorrect Timestamp Array Size")
-        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Data Array Size")
+        rows = self.gen.Dist_Array.shape[0]
+        columns = None
+        try:
+            columns = self.gen.Dist_Array.shape[1]
+        # If timestamp and data arrays have different sizes, then the numpy array won't be created properly
+        # Dist_Array.shape will be (2,)
+        # and therefore Dist_Array.shape[1] will throw an IndexError Exception
+        except IndexError:
+            print("Timestamp and data arrays have different sizes.")
+        self.assertEquals(rows, size, "Incorrect timestamp and data array size")
+        self.assertEquals(columns, 2, "Incorrect number of dimensions (should be 2)")
 
     # Check that the generated data has cliffs (high days and low days)
     def test_arrayCliffs(self):
