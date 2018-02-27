@@ -57,9 +57,9 @@ class TestGenerator(TestCase):
         # print("Expected array size: ", size)
         timestamps = self.gen.Dist_Array[0]
         data = self.gen.Dist_Array[1]
-        self.assertEquals(timestamps.size, data.size, "Timestamp and Data arrays have different sizes")
-        self.assertEquals(self.gen.Dist_Array[0].size, size, "Incorrect Timestamp Array Size")
-        self.assertEquals(self.gen.Dist_Array[1].size, size, "Incorrect Data Array Size")
+        self.assertEquals(len(timestamps), len(data), "Timestamp and Data arrays have different sizes")
+        self.assertEquals(len(self.gen.Dist_Array[0]), size, "Incorrect Timestamp Array Size")
+        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Data Array Size")
 
     # Check that the array has correct size with custom inputted days
     def test_customArraySize(self):
@@ -72,9 +72,9 @@ class TestGenerator(TestCase):
         # print(self.gen.Dist_Array)
         timestamps = self.gen.Dist_Array[0]
         data = self.gen.Dist_Array[1]
-        self.assertEquals(timestamps.size, data.size, "Timestamp and Data arrays have different sizes")
-        self.assertEquals(self.gen.Dist_Array[0].size, size, "Incorrect Timestamp Array Size")
-        self.assertEquals(self.gen.Dist_Array[1].size, size, "Incorrect Data Array Size")
+        self.assertEquals(len(timestamps), len(data), "Timestamp and Data arrays have different sizes")
+        self.assertEquals(len(self.gen.Dist_Array[0]), size, "Incorrect Timestamp Array Size")
+        self.assertEquals(len(self.gen.Dist_Array[1]), size, "Incorrect Data Array Size")
 
     # Check that the generated data has cliffs (high days and low days)
     def test_arrayCliffs(self):
