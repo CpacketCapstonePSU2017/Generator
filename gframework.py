@@ -61,7 +61,7 @@ class TrafficGenerator:
             selection = input("Choose scale: ")
             self.gen_config.set_scale(int(selection))
             selection = input("Choose function type: ")
-            self.gen_config.set_func_type(int(selection))
+            self.gen_config.set_func_type(selection)
         input("Generator configuration is set. Press any key to continue...")
 
         self.generator = Generator(self.gen_config)
