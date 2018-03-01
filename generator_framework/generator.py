@@ -10,20 +10,25 @@
     write_data_to_database takes the generated data and puts it in a csv, and then transfers it to InfluxDB.
 '''
 
-from generator_config import *
+from generator_framework.generator_config import GeneratorConfig
 import sys
 sys.path.append('../resources')
 from resources.weibull import *
 from os import path, remove
 from resources.config import RESOURCES_DIR
 from resources import db_config
+from root import ROOT_DIR
 sys.path.append(path.join(ROOT_DIR, 'CPacket-Common-Modules'))
 from io_framework.csv_writer import CsvWriter
+import datetime
 
 
 class Generator:
-    def __init__(self):
-        self._Config = GeneratorConfig()
+    def __init__(self, config_object=None):
+        if isinstance(config_object, GeneratorConfig):
+            self._Config = config_object
+        else:
+            self._Config = GeneratorConfig()
         self._Columns = 'avg_hrcrx_max_byt'
         self._data_writer = CsvWriter(host=db_config.host, port=db_config.port, username=db_config.username,
                                       password=db_config.password, database=self._Config.Database)
@@ -53,4 +58,3 @@ class Generator:
         self._data_writer.csv_file_to_db(measurement_to_use=model_name + '_generated',
                                          new_csv_file_name=path.join(RESOURCES_DIR, model_name + "_generated.csv"))
         remove(path.join(RESOURCES_DIR, model_name + "_generated.csv"))
-
