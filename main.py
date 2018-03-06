@@ -1,1 +1,3 @@
-print("Hello, world!")
+from gframework import TrafficGenerator
+generator = TrafficGenerator()
+generator.main()
