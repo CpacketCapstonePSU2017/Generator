@@ -1,4 +1,5 @@
 """
+    This code is released under an MIT license
     This generator class uses a given distribution function to generate network traffic for a given period of time.
     generator_config.py contains the variables for distribution function type, amount of time, maximum, etc.
     Every distribution function is represented by a class, which is located in the resources folder.

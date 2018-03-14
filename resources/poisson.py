@@ -1,3 +1,6 @@
+"""
+    This code is released under an MIT license
+"""
 import pandas as pd
 import numpy as np
 

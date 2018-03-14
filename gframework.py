@@ -1,3 +1,6 @@
+"""
+    This code is released under an MIT license
+"""
 from generator_framework.generator import Generator
 from generator_framework.generator_config import GeneratorConfig
 from datetime import datetime
