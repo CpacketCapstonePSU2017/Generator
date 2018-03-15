@@ -1,4 +1,5 @@
 """
+    This code is released under an MIT license
     Author: Adrian Cardoza
 """
 
