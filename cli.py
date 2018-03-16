@@ -1,4 +1,5 @@
 """
+    This code is released under an MIT license
     A slightly beautiful Click CLI
     Author: Josh Garrison
 """

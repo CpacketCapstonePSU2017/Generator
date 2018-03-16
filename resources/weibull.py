@@ -1,4 +1,5 @@
 """
+    This code is released under an MIT license
     A simple function for Distributions
     The byte count is accessed from ._ByteCount for each new object created.
 """

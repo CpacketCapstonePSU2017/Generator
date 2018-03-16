@@ -1,3 +1,6 @@
+"""
+    This code is released under an MIT license
+"""
 from generator_framework import generator
 from generator_framework import generator_config
 import random
